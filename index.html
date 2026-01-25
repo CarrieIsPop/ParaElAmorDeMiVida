@@ -19,6 +19,16 @@
     <main id="main-content" class="hidden">
         <button id="theme-toggle" onclick="cambiarTema()">🌙</button>
 
+        <div id="mood-thermometer" class="mood-container">
+            <h3>¿Cómo te sientes hoy? ✨</h3>
+            <div class="mood-options">
+                <button onclick="updateMood('happy')" title="Feliz">😊</button>
+                <button onclick="updateMood('tired')" title="Cansada">😴</button>
+                <button onclick="updateMood('missyou')" title="Te extraño">🥺</button>
+            </div>
+            <p id="mood-message"></p>
+        </div>
+
         <section id="hero">
             <h1 id="typewriter"></h1>
         </section>
