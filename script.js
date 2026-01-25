@@ -3,7 +3,7 @@ const ANNIVERSARY = new Date("Jan 17, 2027 00:00:00").getTime();
 const FIRST_MONTH = new Date("Feb 17, 2026 00:00:00").getTime();
 
 const playlist = [
-    { title: "Lofi Love Mix 🎵", file: "assets/lofi1.mp3" },
+    { title: "Lofi Love Mix 🎵", file: "assets/Lofi1.mp3" },
     { title: "Dulces Sueños ✨", file: "assets/lofi2.mp3" }
 ];
 let currentSongIndex = 0;
@@ -198,3 +198,4 @@ window.onload = () => {
         escribir();
     }, 4500);
 };
+
