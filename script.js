@@ -1,8 +1,7 @@
-// Fechas Importantes
+// --- 1. Variables Globales y Configuración ---
 const ANNIVERSARY = new Date("Jan 17, 2027 00:00:00").getTime();
 const FIRST_MONTH = new Date("Feb 17, 2026 00:00:00").getTime();
 
-// Configuración de Música (Asegúrate de tener lofi1.mp3 en assets)
 const playlist = [
     { title: "Lofi Love Mix 🎵", file: "assets/lofi1.mp3" },
     { title: "Dulces Sueños ✨", file: "assets/lofi2.mp3" }
@@ -14,7 +13,7 @@ audio.loop = true;
 let compliments = [];
 let usedIds = JSON.parse(localStorage.getItem('visto')) || [];
 
-// 1. Iniciar Frases (JSON)
+// --- 2. Lógica de Cumplidos (JSON) ---
 async function initCompliments() {
     try {
         const resp = await fetch('assets/compliments.json');
@@ -24,7 +23,6 @@ async function initCompliments() {
     }
 }
 
-// 2. Lógica de Cumplidos sin Repetir
 function darCumplido() {
     const p = document.getElementById("compliment-text");
     let disponibles = compliments.filter(c => !usedIds.includes(c.id));
@@ -47,18 +45,16 @@ function darCumplido() {
     }, 300);
 }
 
-// 3. Escritura con Espacios
+// --- 3. Efecto Typewriter ---
 function escribir() {
-    // Asegúrate de que los espacios estén presentes dentro de las comillas
     const msg = "Hola mi amor... hice este rincon solo para nosotros. ❤️";
     let i = 0;
     const dest = document.getElementById("typewriter");
     
-    if (!dest) return; // Seguridad de código
+    if (!dest) return;
     dest.innerHTML = ""; 
 
     const interval = setInterval(() => {
-        // Usamos un pequeño truco: si el caracter es un espacio, usamos el espacio de no ruptura
         if (msg[i] === " ") {
             dest.innerHTML += "&nbsp;";
         } else {
@@ -69,10 +65,10 @@ function escribir() {
         if (i === msg.length) {
             clearInterval(interval);
         }
-    }, 90); // Un poquito más lento para que sea más romántico
+    }, 90);
 }
 
-// 4. Lógica de Música (Iconos Play/Pause)
+// --- 4. Reproductor de Música ---
 function toggleMusica() {
     const btn = document.getElementById("play-btn");
     if (audio.paused) {
@@ -102,28 +98,79 @@ function cambiarCancion() {
     document.getElementById("play-btn").innerText = "⏸️";
 }
 
-// 5. Contadores
+// --- 5. NUEVO: Lógica del Termómetro de Ánimo ---
+function updateMood(mood) {
+    const body = document.body;
+    const msg = document.getElementById("mood-message");
+    
+    // Diccionario de estados
+    const reactions = {
+        'happy': {
+            color: "#ff85a1", 
+            text: "¡Esa sonrisa es mi motor! ❤️",
+            musicIdx: 0 // Lofi Love Mix
+        },
+        'tired': {
+            color: "#4a4e69", 
+            text: "Descansa, yo te cuido... 🌙",
+            musicIdx: 1 // Dulces Sueños
+        },
+        'missyou': {
+            color: "#ff4d6d", 
+            text: "¡Pronto estaremos juntos! 🥺",
+            musicIdx: 0
+        }
+    };
+
+    const choice = reactions[mood];
+    
+    // Transición de fondo suave
+    body.style.transition = "background 1s ease";
+    body.style.backgroundColor = choice.color;
+    msg.innerText = choice.text;
+
+    // Cambiar música automáticamente si es un mood diferente
+    if (currentSongIndex !== choice.musicIdx) {
+        currentSongIndex = choice.musicIdx;
+        cambiarCancion();
+    }
+}
+
+// --- 6. Contadores de Tiempo ---
 setInterval(() => {
     const ahora = new Date().getTime();
-    const calc = (target, id) => {
+
+    const calc = (target, id, mensajeFinal) => {
         const el = document.getElementById(id);
-        if(!el) return;
+        if (!el) return;
+
         const d = target - ahora;
+
+        if (d <= 0) {
+            el.innerText = mensajeFinal;
+            el.classList.add("celebracion");
+            return;
+        }
+
         const dias = Math.floor(d / (1000 * 60 * 60 * 24));
         const horas = Math.floor((d % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const mins = Math.floor((d % (1000 * 60 * 60)) / (1000 * 60));
         const segs = Math.floor((d % (1000 * 60)) / 1000);
+
         el.innerText = `${dias}d ${horas}h ${mins}m ${segs}s`;
     };
-    calc(ANNIVERSARY, "timer-aniversario");
-    calc(FIRST_MONTH, "timer-mes");
+
+    calc(ANNIVERSARY, "timer-aniversario", "¡Feliz Aniversario! ❤️");
+    calc(FIRST_MONTH, "timer-mes", "¡Feliz primer mes! 😍");
 }, 1000);
 
-// 6. Tema y Brillos
+// --- 7. Interfaz y Efectos Visuales ---
 function cambiarTema() {
     const b = document.body;
     const isDark = b.getAttribute("data-theme") === "dark";
     b.setAttribute("data-theme", isDark ? "light" : "dark");
+    // Al cambiar de tema, quitamos el color de fondo manual del termómetro
+    b.style.backgroundColor = ""; 
     document.getElementById("theme-toggle").innerText = isDark ? "🌙" : "☀️";
 }
 
@@ -140,12 +187,14 @@ document.addEventListener('mousedown', (e) => {
     }
 });
 
-// Carga Inicial
+// --- 8. Carga Inicial ---
 window.onload = () => {
     initCompliments();
     setTimeout(() => {
-        document.getElementById("loader").classList.add("hidden");
-        document.getElementById("main-content").classList.remove("hidden");
+        const loader = document.getElementById("loader");
+        const content = document.getElementById("main-content");
+        if(loader) loader.classList.add("hidden");
+        if(content) content.classList.remove("hidden");
         escribir();
     }, 4500);
 };
