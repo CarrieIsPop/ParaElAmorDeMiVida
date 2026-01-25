@@ -13,7 +13,11 @@
     --card: #2d2d2d;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
 
 body {
     background-color: var(--bg);
@@ -23,13 +27,13 @@ body {
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
-    transition: 0.5s;
+    transition: background 0.5s ease, color 0.5s ease;
     overflow-x: hidden;
     /* Cursor de corazón */
     cursor: url('https://cdn-icons-png.flaticon.com/32/833/833472.png'), auto;
 }
 
-/* Pantalla de Carga */
+/* --- Pantalla de Carga --- */
 #loader {
     position: fixed;
     inset: 0;
@@ -39,6 +43,10 @@ body {
     justify-content: center;
     align-items: center;
     z-index: 2000;
+}
+
+#loader.hidden {
+    display: none !important;
 }
 
 .rose-svg { width: 150px; height: 150px; }
@@ -52,7 +60,7 @@ body {
 }
 @keyframes drawRose { to { stroke-dashoffset: 0; } }
 
-/* Elementos Fijos (Esquinas) */
+/* --- Elementos Fijos --- */
 #theme-toggle {
     position: fixed;
     top: 20px;
@@ -81,7 +89,46 @@ body {
     text-align: center;
 }
 
-/* Contenido Central */
+/* --- NUEVO: Termómetro de Ánimo (Fijo a la izquierda) --- */
+.mood-container {
+    position: fixed;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--card);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 20px;
+    border: 1px solid var(--text);
+    text-align: center;
+    width: 150px;
+    z-index: 1000;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    transition: all 0.5s ease;
+}
+
+.mood-options button {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: transform 0.3s;
+    display: block;
+    margin: 10px auto;
+}
+
+.mood-options button:hover {
+    transform: scale(1.3);
+}
+
+#mood-message {
+    font-size: 0.9rem;
+    margin-top: 10px;
+    color: var(--text);
+    font-weight: bold;
+}
+
+/* --- Contenido Central --- */
 main {
     width: 90%;
     max-width: 600px;
@@ -98,7 +145,7 @@ main {
     min-height: 3em;
 }
 
-/* Sección de Cumplidos */
+/* --- Sección de Cumplidos --- */
 #compliments-section { margin: 40px 0; }
 .btn-love {
     background: var(--text);
@@ -109,9 +156,6 @@ main {
     font-size: 1rem;
     cursor: pointer;
     box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3);
-}
-
-.btn-love {
     animation: pulse 2s infinite;
 }
 
@@ -128,7 +172,76 @@ main {
     transition: 0.3s;
 }
 
-/* Contadores Inferiores */
+/* --- Registro de Amor (Commit Log) --- */
+.commit-log {
+    margin: 40px 0;
+    text-align: left;
+    display: inline-block;
+}
+
+.log-container p {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.log-container span {
+    color: var(--accent);
+    margin-right: 10px;
+}
+
+/* --- Sección Collage Polaroid --- */
+.section-title {
+    margin-top: 50px;
+    font-size: 1.5rem;
+    color: var(--text);
+}
+
+.collage-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    padding: 40px 20px;
+    perspective: 1000px;
+}
+
+.polaroid {
+    background: white;
+    padding: 15px 15px 40px 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    border-radius: 2px;
+    width: 220px;
+    transition: transform 0.4s ease;
+    cursor: pointer;
+}
+
+.polaroid img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    filter: sepia(0.2);
+}
+
+.polaroid p {
+    color: #444;
+    font-family: 'Dancing Script', cursive, 'Arial'; 
+    font-size: 1.2rem;
+    margin-top: 15px;
+}
+
+.polaroid:nth-child(odd) { transform: rotate(5deg); }
+.polaroid:nth-child(even) { transform: rotate(-5deg); }
+
+.polaroid:hover {
+    transform: scale(1.1) rotate(0deg) translateY(-20px) !important;
+    z-index: 100;
+    box-shadow: 0 15px 35px rgba(255, 77, 109, 0.4);
+}
+
+[data-theme="dark"] .polaroid { background: #e0e0e0; }
+
+/* --- Contadores Inferiores --- */
 .footer-timers {
     display: flex;
     justify-content: center;
@@ -145,7 +258,7 @@ main {
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
-/* Brillos al Click */
+/* --- Efectos Visuales --- */
 .sparkle {
     position: absolute;
     width: 8px;
@@ -155,93 +268,38 @@ main {
     pointer-events: none;
     animation: explode 0.8s forwards;
 }
+
 @keyframes explode {
     to { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; }
 }
 
-/* --- Estilo Polaroid --- */
-.section-title {
-    margin-top: 50px;
-    font-size: 1.5rem;
-    color: var(--text);
-}
-
-.collage-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 30px;
-    padding: 40px 20px;
-    perspective: 1000px; /* Le da profundidad */
-}
-
-.polaroid {
-    background: white;
-    padding: 15px 15px 40px 15px; /* Espacio abajo para el texto */
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    border-radius: 2px;
-    width: 220px;
-    transition: transform 0.4s ease;
-    cursor: pointer;
-}
-
-.polaroid img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover; /* Para que la foto no se deforme */
-    filter: sepia(0.2); /* Efecto vintage suave */
-}
-
-.polaroid p {
-    color: #444; /* El texto en las polaroids reales suele ser oscuro */
-    font-family: 'Dancing Script', cursive, 'Arial'; 
-    font-size: 1.2rem;
-    margin-top: 15px;
-}
-
-/* Efecto de rotación aleatoria para que parezcan tiradas en una mesa */
-.polaroid:nth-child(odd) { transform: rotate(5deg); }
-.polaroid:nth-child(even) { transform: rotate(-5deg); }
-.polaroid:nth-child(3n) { transform: rotate(3deg) translateY(-10px); }
-
-/* Al pasar el mouse, la foto se endereza y sube */
-.polaroid:hover {
-    transform: scale(1.1) rotate(0deg) translateY(-20px) !important;
-    z-index: 100;
-    box-shadow: 0 15px 35px rgba(255, 77, 109, 0.4);
-}
-
-/* Modo Noche: Oscurecemos un poquito el papel de la polaroid */
-[data-theme="dark"] .polaroid {
-    background: #e0e0e0;
-}
-
 /* --- Soporte para Celulares --- */
-@media (max-width: 600px) {
-    #typewriter {
-        font-size: 1.2rem; /* Letras un poco más pequeñas para que no se corten */
-        padding: 0 10px;
-    }
-
-    .polaroid {
-        width: 160px; /* Polaroids más pequeñas para que quepan de a dos o no ocupen toda la pantalla */
-        padding: 10px 10px 30px 10px;
-    }
-
-    .footer-timers {
-        flex-direction: column; /* Los contadores se ponen uno arriba del otro */
+@media (max-width: 768px) {
+    .mood-container {
+        position: relative;
+        left: 0;
+        top: 0;
+        transform: none;
+        width: 100%;
+        margin-bottom: 30px;
+        display: flex;
+        flex-direction: column;
         align-items: center;
-        gap: 15px;
+    }
+    
+    .mood-options {
+        display: flex;
+        gap: 20px;
     }
 
-    .timer-card {
-        width: 80%; /* Que ocupen casi todo el ancho del cel */
+    .mood-options button {
+        display: inline-block;
+        margin: 10px 0;
     }
 
-    .music-player {
-        width: 160px; /* Reproductor más compacto */
-        bottom: 10px;
-        right: 10px;
-        font-size: 12px;
-    }
+    #typewriter { font-size: 1.2rem; }
+    .polaroid { width: 160px; }
+    .footer-timers { flex-direction: column; align-items: center; }
+    .timer-card { width: 80%; }
+    .music-player { width: 160px; font-size: 12px; }
 }
