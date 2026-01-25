@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Para Mi Favorita</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
 </head>
 <body>
     <div id="loader">
@@ -81,6 +82,31 @@
             </div>
         </section>
 
+        <section id="game-section" class="game-container">
+            <h2 class="section-title">PREGUNTITAS PREGUNTONAS ❤️</h2>
+    
+            <div class="progress-wrapper">
+                <div id="progress-bar" class="progress-fill">0%</div>
+            </div>
+
+            <div id="quiz-card" class="quiz-card">
+                <p id="question-text">Cargando pregunta...</p>
+                <div id="options-container" class="options-grid"></div>
+            </div>
+
+            <div id="reward-area" class="hidden">
+                <h3>¡Lo lograste mi cielo! 🎉</h3>
+                <p>Tu recompensa es este mensaje secreto: "ERES LO MEJOR QUE ME PASO AMOR".</p>
+                <img src="assets/foto-recompensa.jpg" alt="Regalo" class="reward-img">
+            </div>
+
+            <div id="retry-area" class="hidden">
+                <h3>¡Casi lo logras, mi amor! ❤️</h3>
+                <p>No te preocupes, esto no es un examen. ¡Inténtalo de nuevo, yo sé que puedes! ✨</p>
+                <button onclick="restartGame()" class="btn-love">Intentar otra vez 🔄</button>
+            </div>
+        </section>
+
         <footer class="footer-timers">
             <div class="timer-card">
                 <small>Siguiente Aniversario</small>
@@ -93,6 +119,8 @@
         </footer>
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    
     <script src="script.js"></script>
 </body>
 </html>
