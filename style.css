@@ -89,7 +89,7 @@ body {
     text-align: center;
 }
 
-/* --- NUEVO: Termómetro de Ánimo (Fijo a la izquierda) --- */
+/* --- Termómetro de Ánimo --- */
 .mood-container {
     position: fixed;
     left: 20px;
@@ -190,10 +190,75 @@ main {
     margin-right: 10px;
 }
 
-/* --- Sección Collage Polaroid --- */
+/* --- Mini-Juego de Nuestra Historia --- */
+.game-container {
+    margin: 60px auto;
+    padding: 30px;
+    background: var(--card);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    width: 100%;
+}
+
+.progress-wrapper {
+    width: 100%;
+    background: #eee;
+    border-radius: 50px;
+    height: 25px;
+    margin: 20px 0;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.progress-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--text));
+    color: white;
+    text-align: center;
+    line-height: 25px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    transition: width 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.option-btn {
+    background: var(--bg);
+    color: var(--text);
+    border: 2px solid var(--accent);
+    padding: 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.option-btn:hover {
+    background: var(--text);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3);
+}
+
+.reward-img {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 15px;
+    margin-top: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* --- Collage Polaroid --- */
 .section-title {
-    margin-top: 50px;
-    font-size: 1.5rem;
+    margin: 50px 0 30px;
+    font-size: 1.8rem;
     color: var(--text);
 }
 
@@ -292,9 +357,8 @@ main {
         gap: 20px;
     }
 
-    .mood-options button {
-        display: inline-block;
-        margin: 10px 0;
+    .options-grid {
+        grid-template-columns: 1fr; /* Una columna en cel */
     }
 
     #typewriter { font-size: 1.2rem; }
