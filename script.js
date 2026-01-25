@@ -3,7 +3,7 @@ const ANNIVERSARY = new Date("Jan 17, 2027 00:00:00").getTime();
 const FIRST_MONTH = new Date("Feb 17, 2026 00:00:00").getTime();
 
 const playlist = [
-    { title: "Lofi Love Mix 🎵", file: "assets/Lofi1.mp3" },
+    { title: "Lofi Love Mix 🎵", file: "assets/lofi1.mp3" },
     { title: "Dulces Sueños ✨", file: "assets/lofi2.mp3" }
 ];
 let currentSongIndex = 0;
@@ -28,7 +28,7 @@ function darCumplido() {
     let disponibles = compliments.filter(c => !usedIds.includes(c.id));
 
     if (disponibles.length === 0) {
-        usedIds = []; // Reiniciar ciclo
+        usedIds = []; 
         disponibles = compliments;
     }
 
@@ -98,78 +98,155 @@ function cambiarCancion() {
     document.getElementById("play-btn").innerText = "⏸️";
 }
 
-// --- 5. NUEVO: Lógica del Termómetro de Ánimo ---
+// --- 5. Lógica del Termómetro ---
 function updateMood(mood) {
     const body = document.body;
     const msg = document.getElementById("mood-message");
     
-    // Diccionario de estados
     const reactions = {
-        'happy': {
-            color: "#ff85a1", 
-            text: "¡Esa sonrisa es mi motor! ❤️",
-            musicIdx: 0 // Lofi Love Mix
-        },
-        'tired': {
-            color: "#4a4e69", 
-            text: "Descansa, yo te cuido... 🌙",
-            musicIdx: 1 // Dulces Sueños
-        },
-        'missyou': {
-            color: "#ff4d6d", 
-            text: "¡Pronto estaremos juntos! 🥺",
-            musicIdx: 0
-        }
+        'happy': { color: "#ceb36d", text: "¡Esa sonrisa es mi motor! ❤️", musicIdx: 0 },
+        'tired': { color: "#1d3557", text: "Descansa, yo te cuido... 🌙", musicIdx: 1 },
+        'missyou': { color: "#6d597a", text: "¡Pronto estaremos juntos! 🥺", musicIdx: 0 }
     };
 
     const choice = reactions[mood];
-    
-    // Transición de fondo suave
     body.style.transition = "background 1s ease";
     body.style.backgroundColor = choice.color;
     msg.innerText = choice.text;
 
-    // Cambiar música automáticamente si es un mood diferente
     if (currentSongIndex !== choice.musicIdx) {
         currentSongIndex = choice.musicIdx;
         cambiarCancion();
     }
 }
 
-// --- 6. Contadores de Tiempo ---
+// --- 6. Mini-Juego de Nuestra Historia ---
+const questions = [
+    { q: "¿En que fecha nos hicimos novios?", a: "17 de Enero", options: ["15 de Enero", "17 de Enero", "20 de Enero", "17 de Febrero"] },
+    { q: "¿Cual fue nuestra primera canción?", a: "Eres", options: ["Eres", "Saturno", "Cunumi", "Mi persona favorita"] },
+    { q: "¿Que hice para ti en el registro de amor?", a: "Una web", options: ["Un dibujo", "Una web", "Un video", "Una carta"] },
+    { q: "¿Cual es mi comida favorita?", a: "Mostrito", options: ["Salchipapa", "Hamburguesa", "Todo lo comestible", "Mostrito"]},
+    { q: "¿Cual es mi color favorito?", a: "Rosa Pastel", options: ["Negro", "Azul neon", "Salmon", "Rosa Pastel"]},
+    { q: "¿Como se llama nuestra mascotita?", a: "Sushi", options: ["Destructor de galaxias", "Espanta coños", "Sushi", "Kimberly"]},
+    { q: "¿Mi personaje de serie favorito?", a: "Mr. Robot", options: ["Gumball", "Zoe", "Fluttershy", "Mr. Robot"]},
+    { q: "¿Mi juego favorito?", a: "League Of Legends", options: ["League Of Legends", "Roblox", "Left 4 Dead", "Minecraft"]},
+    { q: "¿Mi personaje de juego favorito?", a: "Zoe", options: ["Panda", "Mordekaiser", "Gummy Bee", "Zoe"]},
+    { q: "¿Cuando es mi cumpleaños?", a: "4 de Diciembre", options: ["24 de Diciembre", "4 de Noviembre", "4 de Diciembre", "24 de Noviembre"]},
+    { q: "¿Que era lo que realmente queria estudiar?", a: "Biologia marina", options: ["Biologia marina", "Arquitecto", "Ing. de Software", "Actor nopor"]},
+    { q: "¿Mi serie favorita?", a: "Mr.Robot", options: ["My Little Pony", "Fiona y Cake", "Mr.Robot", "Adolescencia"]},
+    { q: "¿Que hago para distraerme?", a: "Escuchar musica", options: ["Escuchar musica", "Jugar", "Ver videos", "Comer"]},
+    { q: "¿Mi dulce favorito?", a: "GloboPop Led", options: ["Trident", "GloboPop Led", "Chicle en Polvo", "Gomitas trululu"]},
+    { q: "¿Quien es mi mejor amigo?", a: "Ander", options: ["Pala", "Fernan", "Ander", "Diego"]},
+    { q: "¿Genero de musica que escucho al programar?", a: "Phonk", options: ["Rock", "Romanticas","Pop", "Phonk"]},
+    { q: "¿Algo malo de mi?", a: "Ser indeciso", options: ["Pensar mucho", "Mi esquizofrenia", "Mis pensamientos", "Ser indeciso"]},
+    { q: "¿Algo bueno de mi?", a: "Ser creativo", options: ["Ser creativo", "Amigable", "Chistoso", "Inteligente"]},
+    { q: "¿Lo que me gusta que hagas?", a: "Apoyarme", options: ["Mimarme", "Enviarme fotos", "Apoyarme", "Dedicarme poemas"]},
+    { q: "¿Mi animal favorito?", a: "Gatos", options: ["Perros", "Loros", "Gatos", "Peces"]},
+    { q: "¿Genero de pelicula que mas me gusta?", a: "Terror", options: ["Romantico", "Accion", "Terror", "Drama"]},
+    { q: "¿Mi anime favorito?", a: "One Piece", options: ["Dragon Ball", "One Piece", "Sailor Moon", "Solo Leveling"]}
+];
+
+let currentQuestionIndex = 0;
+let correctAnswers = 0;
+
+function loadQuestion() {
+    const qData = questions[currentQuestionIndex];
+    const qText = document.getElementById("question-text");
+    const container = document.getElementById("options-container");
+    
+    if(!qText || !container) return;
+
+    qText.innerText = qData.q;
+    container.innerHTML = "";
+
+    qData.options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.innerText = opt;
+        btn.onclick = () => checkAnswer(opt);
+        container.appendChild(btn);
+    });
+}
+
+function checkAnswer(selected) {
+    if (selected === questions[currentQuestionIndex].a) {
+        correctAnswers++;
+        updateProgressBar();
+    }
+
+    currentQuestionIndex++;
+
+    if (currentQuestionIndex < questions.length) {
+        loadQuestion();
+    } else {
+        finishGame();
+    }
+}
+
+function updateProgressBar() {
+    const progress = (correctAnswers / questions.length) * 100;
+    const bar = document.getElementById("progress-bar");
+    if(!bar) return;
+    bar.style.width = `${progress}%`;
+    bar.innerText = `${Math.round(progress)}%`;
+}
+
+function finishGame() {
+    const quizCard = document.getElementById("quiz-card");
+    const reward = document.getElementById("reward-area");
+    const retry = document.getElementById("retry-area");
+    
+    if(quizCard) quizCard.classList.add("hidden");
+
+    const progress = (correctAnswers / questions.length) * 100;
+
+    if (progress === 100) {
+        if(reward) reward.classList.remove("hidden");
+        // Efecto de Confeti al ganar
+        confetti({
+            particleCount: 150,
+            spread: 70,
+            origin: { y: 0.6 }
+        });
+    } else {
+        if(retry) retry.classList.remove("hidden");
+    }
+}
+
+function restartGame() {
+    currentQuestionIndex = 0;
+    correctAnswers = 0;
+    updateProgressBar();
+    
+    document.getElementById("retry-area").classList.add("hidden");
+    document.getElementById("reward-area").classList.add("hidden");
+    document.getElementById("quiz-card").classList.remove("hidden");
+    
+    loadQuestion();
+}
+
+// --- 7. Contadores, Temas y Efectos ---
 setInterval(() => {
     const ahora = new Date().getTime();
-
     const calc = (target, id, mensajeFinal) => {
         const el = document.getElementById(id);
         if (!el) return;
-
         const d = target - ahora;
-
-        if (d <= 0) {
-            el.innerText = mensajeFinal;
-            el.classList.add("celebracion");
-            return;
-        }
-
+        if (d <= 0) { el.innerText = mensajeFinal; return; }
         const dias = Math.floor(d / (1000 * 60 * 60 * 24));
         const horas = Math.floor((d % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const mins = Math.floor((d % (1000 * 60 * 60)) / (1000 * 60));
         const segs = Math.floor((d % (1000 * 60)) / 1000);
-
         el.innerText = `${dias}d ${horas}h ${mins}m ${segs}s`;
     };
-
     calc(ANNIVERSARY, "timer-aniversario", "¡Feliz Aniversario! ❤️");
     calc(FIRST_MONTH, "timer-mes", "¡Feliz primer mes! 😍");
 }, 1000);
 
-// --- 7. Interfaz y Efectos Visuales ---
 function cambiarTema() {
     const b = document.body;
     const isDark = b.getAttribute("data-theme") === "dark";
     b.setAttribute("data-theme", isDark ? "light" : "dark");
-    // Al cambiar de tema, quitamos el color de fondo manual del termómetro
     b.style.backgroundColor = ""; 
     document.getElementById("theme-toggle").innerText = isDark ? "🌙" : "☀️";
 }
@@ -190,6 +267,7 @@ document.addEventListener('mousedown', (e) => {
 // --- 8. Carga Inicial ---
 window.onload = () => {
     initCompliments();
+    loadQuestion();
     setTimeout(() => {
         const loader = document.getElementById("loader");
         const content = document.getElementById("main-content");
@@ -198,4 +276,3 @@ window.onload = () => {
         escribir();
     }, 4500);
 };
-
