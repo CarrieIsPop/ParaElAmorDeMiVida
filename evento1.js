@@ -4,7 +4,7 @@
 const horarios = [
     new Date(2026, 1, 14, 8, 0, 0).getTime(),
     new Date(2026, 1, 14, 16, 0, 0).getTime(),
-    new Date(2026, 1, 14, 22, 0, 0).getTime()
+    new Date(2026, 1, 14, 20, 0, 0).getTime()
 ];
 
 // --- LÓGICA DE AUDIO (PLAYLIST SECUENCIAL) ---
@@ -147,4 +147,5 @@ function lanzarConfeti(colores) {
 
 document.addEventListener('keydown', (e) => {
     if (e.key === "Escape") cerrarTodo();
+
 });
