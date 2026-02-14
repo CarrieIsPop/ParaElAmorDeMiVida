@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FELIZ SAN VALENTIN AMORCITO ❤️</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="evento1.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+</head>
+<body class="valentine-body">
+    <audio id="bg-music">
+        <source src="assets/MusicaEvento.mp3" type="audio/mpeg">
+    </audio>
+
+    <canvas id="hearts-canvas"></canvas>
+
+    <div id="overlay" class="overlay" onclick="cerrarTodo()"></div>
+
+    <div class="main-layout">
+        <section class="content-area">
+            <div class="title-container">
+                <h1 class="main-page-title typing-effect">CARTAS QUE ESCRIBI PARA TI</h1>
+            </div>
+
+            <div class="letters-grid">
+                <div class="envelope-container">
+                    <div id="timer1" class="timer-tag">Calculando...</div>
+                    <div class="envelope-wrapper locked" id="env1" onclick="abrirMensaje(1)">
+                        <div class="envelope"></div>
+                    </div>
+                </div>
+
+                <div class="envelope-container">
+                    <div id="timer2" class="timer-tag">Calculando...</div>
+                    <div class="envelope-wrapper locked" id="env2" onclick="abrirMensaje(2)">
+                        <div class="envelope"></div>
+                    </div>
+                </div>
+
+                <div class="envelope-container">
+                    <div id="timer3" class="timer-tag">Calculando...</div>
+                    <div class="envelope-wrapper locked" id="env3" onclick="abrirMensaje(3)">
+                        <div class="envelope"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="final-gift-section">
+                <div id="final-gift" class="gift-box locked" onclick="abrirCartaFinal()">
+                    <span class="icon">🎁</span>
+                    <span class="lock-status">🔒 Bloqueado</span>
+                </div>
+                <p class="hint-text">Se abrirá cuando leas las 3 cartas...</p>
+            </div>
+        </section>
+
+        <aside class="sidebar-area">
+            <button class="btn-me-gusta" onclick="abrirGaleria()">
+                ✨ Lo que me gusta de ti ✨
+            </button>
+            <button class="btn-gift" onclick="abrirRamo()">
+                🎁 Tengo un regalo para ti
+            </button>
+        </aside>
+    </div>
+
+    <div id="modal-container">
+        <div id="msg1" class="modal-letter" onclick="cerrarTodo()">
+            <p>Carta de la Mañana ☀️</p>
+            <p>¡Buenos días, mi amor! ✨</p>
+            <p>¿Sabías que desde que abro los ojos mi primer pensamiento tiene tu nombre? Antes de empezar con cualquier línea de código o pendiente del día, me quedo un rato imaginando qué estarás haciendo y deseando que todo te salga increíble hoy. ❤️</p>
+            <p>Espero que este mensajito sea el primer rayito de sol de tu mañana. ¡Ten una mañana fenomenal! ❤️</p>
+        </div>
+
+        <div id="msg2" class="modal-letter" onclick="cerrarTodo()">
+            <p>Carta de la Tarde ☕</p>
+            <p>¡Hola de nuevo, mi amor! ✨</p>
+            <p>Son las 4:00 PM aunque normalmente siempre pienso en ti a estas horas y preguntandome:</p>
+            <ul style="list-style: none; padding: 0; margin: 15px 0;">
+                <p>🎮 ¿Estaras ganando alguna partida de free o jugando roblox?</p>
+                <p>📺 ¿Concentrada viendo alguna serie?</p>
+                <p>💪 ¿Alistandote para ir el GYM?</p>
+                <p>🍋 ¿O quizas... disfrutando de un limón con sal o otra cosa?.</p>
+            </ul>
+            <p>Disfruta de tu linda tarde, te lo mereces por ser la persona más increíble. ❤️</p>
+        </div>
+
+        <div id="msg3" class="modal-letter" onclick="cerrarTodo()">
+            <p>Carta de la Noche 🌙</p>
+            <p>Buenas noches, mi cielo... ✨</p>
+            <p>Deseo estar contigo a pesar de no saber de que hablar y perdon por eso.. Y gracias por dejarme estar ahi a pesar de mis silencios. ❤️</p>
+            <p>Cada noche, antes de cerrar los ojos, te conviertes en mi ultimo pensamiento. Y tambien te deseo buenas noches o madrugadas 🥰💤</p>
+            <p>P.D. Aun hay una cartita más que debes leer. TE AMOO ❤️</p>
+        </div>
+
+        <div id="msg-final" class="modal-letter" onclick="cerrarTodo()">
+            <p>💌 Para Francy Jaquelin Insandara Vivas...</p>
+            <p>Hola mi vida, en esta ultima carta que escribi para ti un poco larga pero es porque mi amor por ti en enorme, grandisimo, gigantezco...✨</p>
+            <p>Cuando escribias en el grupo de discord para jugar siempre te respondia porque bueno talvez al inicio nunca pense que seria mi pareja pero
+                cada vez que jugabamos mas y mas me empezaste a interesar y bueno supongo que ese dia en ese juego de mover la roca se aclaro eso
+                aunque como dijiste que no me tomabas en serio me rechace a la posibilidad de ser alguien a quien tu ames, y bueno seguimos jugando y 
+                hablando mas seguido que empeze a creer que tal vez si podria tener chance pero cuando volvio a surgir la conversación sobre esto cuando ander
+                pregunto en una llamada pues bueno me dijiste de nuevo que no te lo tomabas en serio entonces me rechace a mi mismo otra vez y me lo 
+                dejaste claro cuando me dijiste que me sacaste capturas y te hacia reir y hasta pense que te incomodabas cuando te molestaba ander diciendo "mientras 
+                carrie lo celebra toa lo sufre" y pues creia que mis chances ya estaban en 0 pero el tiempo paso ahora mayormente jugabamos mas tu y yo
+                y pues fue donde hubo un poquito de probabilidad que no pensaba dejarla pasar cuando hablamos en navidad te compartia lo que hice y bueno tambien grabe un video que 
+                nunca te lo envie pero era solo para compartir y pues luego te conte que consegui trabajo y demas pero cada vez que volvia jugabamos
+                ya que la verdad pasar tiempo contigo se sentia agradable me gustaba poder escribirte contarme que me paso, preguntarte que haces y demas, 
+                donde tambien me contabas que te fuiste de paseo a casa de Mia donde la verdad fue donde mas pude escuchar tu linda voz que segun tu es medio
+                chillona pero para mi escucharte reir, decir cosas sin sentido, hablar... era lo mejor y pues bueno fue en donde te confese que yo estar interesadoo en ti y eso... 
+                aunque me demore ya que no estaba seguro ya que segun yo necesitaba señales jsjsj aún asi te lo pregunte si un yo tenia chances de ser algo mas que tu amigo
+                y me preguntaste burlandote "¿Mejor amigo?" jaja rei para no llorar pero aun asi segui y te pregunte "¿Si yo puedo ser tu novio?" y aceptaste...    
+                me aceptaste a mi, me alegre mucho que no dejaba de poner una carita que bueno que no viste pero me vi en un espejo y dije wao con este wey.
+            </p>
+            <p>Pero en fin, fuiste lo mas increible que me paso y eso siempre sera asi ya que te conoci solo por tu voz no te vi ni nada similar y aun asi senti algo por ti
+                por tu personalidad y eso no cambiara ya que eres perfecta para mi, tambien graciosa, muy pero en serio muy atrevida aunque lo niegues pero ok jajaj.... eres mucho mas para mi, 
+                eres el amor de mi vida y eso no lo cambiaria por nada por eso estoy dispuesto a apoyarte en todo y aun no puedo decir darte todo pero prometo que asi sera. 
+                Te amo y mi corazoncito nunca dejara de latir por ti.
+            </p>
+            <p>Tambien se que preferirias un ramo de hortencias real y no uno que es mas que una simple imagen pero prometo que te dare uno real, ¿solo esperame si?</p>
+            <p>Gracias por ser mi San Valentín, hoy y todos los días. ❤️</p>
+            <p class="firma">Con todo mi amor, SAMEER</p>
+        </div>
+
+        <div id="gallery-modal" class="modal-gallery" onclick="cerrarTodo()">
+            <div class="gallery-frame">
+                <img src="assets/Francy1.jpeg" alt="Foto 1" class="img-frame">
+                <img src="assets/Francy2.jpeg" alt="Foto 2" class="img-frame">
+            </div>
+            <div class="gallery-text">
+                <p>Me encantan tus ojos con esa linda mirada :3. Eres mi persona favorita. 😍✨</p>
+            </div>
+        </div>
+
+        <div id="ramo-modal" class="modal-hydrangea" onclick="cerrarTodo()">
+            <div class="hydrangea-bouquet">
+                <img src="assets/Ramo.png" alt="Ramo de Hortensias" class="img-bouquet-neon">
+            </div>
+            <div class="gallery-text">
+                <p>Un ramo que nunca se marchita... 🌸✨</p>
+                <p style="font-size: 1rem; font-family: 'Playfair Display', serif;">
+                    Pasa el mouse para verlo brillar. ❤️💙
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls-event">
+        <a href="index.html" class="btn-love">🏠 Volver al inicio</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <script src="evento1.js"></script>
+    <script src="particles.js"></script>
+</body>
+</html>

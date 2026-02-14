@@ -1,0 +1,309 @@
+/* =========================================
+   ESTILOS GLOBALES Y FONDO (ATARDECER)
+   ========================================= */
+.valentine-body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: flex-start; 
+    background: linear-gradient(to bottom, #0f0c29, #302b63, #ff758c);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: white;
+    padding: 60px 0;
+    overflow-x: hidden;
+    margin: 0;
+}
+
+#hearts-canvas {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 1; pointer-events: none; 
+}
+
+/* =========================================
+   TÍTULO CON EFECTO DE ESCRITURA
+   ========================================= */
+.title-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 80px;
+    z-index: 10;
+}
+
+.main-page-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3rem;
+    color: #ffffff;
+    text-align: center;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+    margin: 0; /* Quitamos margen para que el contenedor controle el espacio */
+}
+
+/* Clase mágica para el efecto de escritura */
+.typing-effect {
+    display: inline-block;
+    overflow: hidden; /* Oculta el texto hasta que se escribe */
+    white-space: nowrap; /* Mantiene todo en una línea */
+    border-right: 3px solid rgba(255,255,255,0.8); /* El cursor parpadeante */
+    width: 0; /* Empieza invisible */
+    animation: 
+        typing 4s steps(40, end) forwards, /* Escribe en 4 segundos */
+        blink-caret 0.75s step-end infinite; /* Cursor parpadeando */
+}
+
+/* Animación de escribir (de ancho 0 a 100%) */
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+/* Animación del cursor */
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: white; }
+}
+
+/* =========================================
+   CAPA DE EFECTO CINE (OVERLAY)
+   ========================================= */
+.overlay {
+    position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85);
+    z-index: 50; visibility: hidden; opacity: 0;
+    transition: 0.4s; backdrop-filter: blur(5px);
+}
+.overlay.active { visibility: visible; opacity: 1; }
+
+/* =========================================
+   BARRA LATERAL (BOTONES)
+   ========================================= */
+.sidebar-area {
+    position: absolute; right: 5%; top: 250px; z-index: 40; 
+    display: flex; flex-direction: column; gap: 20px;
+}
+
+.btn-me-gusta, .btn-gift {
+    border: none; padding: 12px 20px; border-radius: 25px;
+    font-family: 'Dancing Script', cursive; font-size: 1.2rem;
+    cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-me-gusta { background: white; color: #ff4d6d; }
+
+.btn-gift {
+    background: linear-gradient(45deg, #d90429, #003049); 
+    color: white; font-weight: bold;
+}
+
+.btn-me-gusta:hover, .btn-gift:hover {
+    transform: scale(1.1) rotate(-2deg);
+    filter: brightness(1.1);
+}
+
+/* =========================================
+   GRILLA DE CARTAS Y SOBRES
+   ========================================= */
+.letters-grid {
+    display: flex; justify-content: center; gap: 60px;
+    width: 100%; z-index: 20;
+}
+.envelope-container { display: flex; flex-direction: column; align-items: center; gap: 15px; }
+.timer-tag {
+    background: white; color: #ff4d6d; padding: 5px 15px; border-radius: 20px;
+    font-family: 'Dancing Script', cursive; font-size: 0.9rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2); border: 1px solid rgba(255, 77, 109, 0.2);
+}
+.envelope-wrapper { position: relative; width: 200px; height: 140px; cursor: pointer; transition: 0.5s; }
+.envelope-wrapper.locked { filter: grayscale(1) brightness(0.6); pointer-events: none; }
+.envelope-wrapper::before {
+    content: ""; position: absolute; top: 0; left: 0; z-index: 4;
+    border-top: 70px solid #ff758f; border-left: 100px solid transparent; border-right: 100px solid transparent;
+    transform-origin: top; transition: 0.4s;
+}
+.envelope-wrapper.open::before { transform: rotateX(180deg); }
+.envelope {
+    position: absolute; bottom: 0; width: 100%; height: 100%;
+    background: #ff4d6d; border-radius: 0 0 10px 10px; z-index: 3;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* =========================================
+   MODALES (CARTAS, GALERÍA Y RAMO)
+   ========================================= */
+.modal-letter, .modal-gallery, .modal-hydrangea {
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.7);
+    z-index: 100; visibility: hidden; opacity: 0;
+    transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.visible { visibility: visible; opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+.modal-letter {
+    background: white; padding: 40px; border-radius: 15px; width: 350px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.modal-letter p {
+    font-family: 'Dancing Script', cursive; color: #333; font-size: 1.3rem;
+    line-height: 1.6; margin-bottom: 15px;
+}
+
+.modal-gallery, .modal-hydrangea {
+    background: rgba(48, 43, 99, 0.5); backdrop-filter: blur(15px);
+    border: 2px solid rgba(255, 117, 140, 0.4); padding: 35px; border-radius: 20px;
+    width: auto; max-width: 90vw; text-align: center;
+    box-shadow: 0 25px 80px rgba(0,0,0,0.6);
+}
+
+/* --- ESTILO IMAGEN DEL RAMO CON NEÓN --- */
+.img-bouquet-neon {
+    width: 300px; height: auto;
+    filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.3)); 
+    transition: all 0.5s ease-in-out;
+    animation: floating 3s ease-in-out infinite;
+}
+.img-bouquet-neon:hover {
+    transform: scale(1.1) rotate(2deg);
+    filter: 
+        drop-shadow(-6px -6px 15px #00e5ff) 
+        drop-shadow(6px 6px 15px #ff0040)
+        brightness(1.2);
+}
+/* -------------------------------------- */
+
+.gallery-frame { display: flex; justify-content: center; gap: 20px; margin-bottom: 25px; }
+.img-frame {
+    width: 200px; height: 280px; object-fit: cover; border-radius: 10px;
+    border: 6px solid white; box-shadow: 0 10px 25px rgba(0,0,0,0.4); transition: 0.3s;
+}
+.img-frame:hover { transform: rotate(-2deg) scale(1.03); }
+
+@keyframes floating {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(2deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+
+.gallery-text p {
+    font-family: 'Playfair Display', serif; font-style: italic; font-weight: 600;
+    color: #ffb3c1; font-size: 1.8rem; margin: 0; text-shadow: 2px 2px 5px rgba(0,0,0,0.6);
+}
+
+/* =========================================
+   CONTROLES Y RESPONSIVE
+   ========================================= */
+.controls-event {
+    margin-top: 100px; display: flex; justify-content: center; width: 100%;
+}
+.btn-love {
+    background: #ff4d6d; color: white; padding: 12px 30px; border-radius: 50px;
+    text-decoration: none; font-family: 'Dancing Script', cursive; font-size: 1.3rem;
+    box-shadow: 0 5px 20px rgba(255, 77, 109, 0.5); transition: 0.3s;
+    position: relative; z-index: 10;
+}
+
+@media (max-width: 900px) {
+    .letters-grid { flex-direction: column; align-items: center; gap: 40px; }
+    .sidebar-area { position: static; margin-top: 30px; order: 2; align-items: center; }
+    .main-page-title { font-size: 2.2rem; }
+    .gallery-frame { flex-direction: column; align-items: center; }
+    .img-frame { width: 160px; height: 220px; }
+    .img-bouquet-neon { width: 220px; }
+}
+
+/* --- ESTILOS DE LA CAJA DE REGALO FINAL --- */
+.final-gift-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+    z-index: 30;
+}
+
+.gift-box {
+    font-size: 4rem; /* Tamaño del icono */
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px 40px;
+    border-radius: 20px;
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.5s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.lock-status {
+    font-size: 1rem;
+    font-family: 'Dancing Script', cursive;
+    margin-top: 10px;
+}
+
+.hint-text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1rem;
+    margin-top: 10px;
+    opacity: 0.8;
+}
+
+/* ESTADO BLOQUEADO */
+.gift-box.locked {
+    filter: grayscale(1);
+    opacity: 0.6;
+    pointer-events: none; /* No se puede clickear */
+}
+
+/* ESTADO DESBLOQUEADO (Animación) */
+.gift-box.unlocked {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid #ffd700; /* Borde dorado */
+    filter: drop-shadow(0 0 15px #ffd700);
+    animation: bounce 2s infinite;
+    pointer-events: auto; /* Ya se puede clickear */
+}
+
+.gift-box.unlocked .lock-status {
+    content: "¡Click para abrir!";
+    color: #ffd700;
+    font-weight: bold;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+    40% {transform: translateY(-20px);}
+    60% {transform: translateY(-10px);}
+}
+
+/* =========================================
+   AJUSTE EXCLUSIVO PARA LA CARTA FINAL
+   ========================================= */
+#msg-final {
+    width: 650px; /* Mucho más ancha (antes era 350px) */
+    max-width: 90vw; /* Para que en celular no se salga de la pantalla */
+    
+    /* Ajustes para texto largo */
+    max-height: 80vh; /* Si es MUY larga, no tapa toda la pantalla */
+    overflow-y: auto; /* Agrega scroll suave si el texto se pasa */
+    padding: 50px; /* Un poco más de espacio interno */
+    
+    /* Opcional: Centrar mejor el texto */
+    text-align: justify; 
+}
+
+/* Ajuste del tamaño de letra solo para esta carta si es necesario */
+#msg-final p {
+    font-size: 1.2rem; /* Un pelín más pequeña para que quepa más */
+    line-height: 1.8; /* Más espacio entre líneas para leer mejor */
+}
+
+/* Personalización del scroll para que se vea elegante */
+#msg-final::-webkit-scrollbar {
+    width: 8px;
+}
+#msg-final::-webkit-scrollbar-thumb {
+    background: #ff4d6d;
+    border-radius: 4px;
+}
