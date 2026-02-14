@@ -202,7 +202,7 @@ function finishGame() {
 
     if (progress === 100) {
         if(reward) reward.classList.remove("hidden");
-        // Efecto de Confeti al ganar
+        localStorage.setItem('juegoGanado', 'true');
         confetti({
             particleCount: 150,
             spread: 70,
@@ -217,11 +217,9 @@ function restartGame() {
     currentQuestionIndex = 0;
     correctAnswers = 0;
     updateProgressBar();
-    
     document.getElementById("retry-area").classList.add("hidden");
     document.getElementById("reward-area").classList.add("hidden");
     document.getElementById("quiz-card").classList.remove("hidden");
-    
     loadQuestion();
 }
 
@@ -264,10 +262,45 @@ document.addEventListener('mousedown', (e) => {
     }
 });
 
-// --- 8. Carga Inicial ---
+// --- 8. Lógica de San Valentín ---
+function checkValentineDate() {
+    const ahora = new Date();
+    const fechaEvento = new Date(2026, 1, 10); 
+    const btn = document.getElementById("btn-evento");
+    const msg = document.getElementById("lock-message");
+
+    if (ahora >= fechaEvento) {
+        if(btn) btn.classList.remove("hidden");
+        if(msg) msg.classList.add("hidden");
+    }
+}
+
+function irAEvento() {
+    window.location.href = "evento1.html";
+}
+
+// --- 9. ÚNICA CARGA INICIAL (UNIFICADA) ---
 window.onload = () => {
     initCompliments();
-    loadQuestion();
+    
+    // Verificamos San Valentín
+    checkValentineDate();
+
+    // Verificamos si ya ganó el juego
+    const yaGano = localStorage.getItem('juegoGanado') === 'true';
+    const rewardArea = document.getElementById("reward-area");
+    const quizCard = document.getElementById("quiz-card");
+
+    if (yaGano && rewardArea && quizCard) {
+        quizCard.classList.add("hidden");
+        rewardArea.classList.remove("hidden");
+        const bar = document.getElementById("progress-bar");
+        if(bar) { bar.style.width = "100%"; bar.innerText = "100%"; }
+    } else {
+        loadQuestion();
+    }
+
+    // Loader y Typewriter
     setTimeout(() => {
         const loader = document.getElementById("loader");
         const content = document.getElementById("main-content");
