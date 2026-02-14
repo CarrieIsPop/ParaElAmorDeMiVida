@@ -367,3 +367,31 @@ main {
     .timer-card { width: 80%; }
     .music-player { width: 160px; font-size: 12px; }
 }
+
+.event-container {
+    margin: 50px auto;
+    padding: 30px;
+    background: var(--card);
+    border: 2px dashed var(--text);
+    border-radius: 20px;
+    text-align: center;
+}
+
+#lock-message {
+    font-style: italic;
+    color: var(--accent);
+}
+
+/* Animación extra para el botón de regalo */
+#btn-evento {
+    background: #ff0054;
+    font-weight: bold;
+    transform: scale(1.1);
+    animation: heartbeat 1.5s infinite;
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
